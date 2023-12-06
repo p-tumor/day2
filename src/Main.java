@@ -7,12 +7,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        final int[] sum = {0};
+        System.out.println(findValidGame(getInput()));
+    }
+    public static ArrayList<String> getInput() throws FileNotFoundException {
         Scanner inputReader = new Scanner(new File("input"));
         ArrayList<String> input = new ArrayList<>();
         while(inputReader.hasNextLine()){
             input.add(inputReader.nextLine());
         }
+        return input;
+    }
+    public static int findValidGame(ArrayList<String> input){
+        final int[] sum = {0};
         input.forEach(i ->{
             String[] gameInfo = i.split(":");
             String[] sets = gameInfo[1].split(";");
@@ -22,7 +28,7 @@ public class Main {
                 picks.addAll(Arrays.asList(set.split(",")));
             }
             picks.replaceAll(s -> s.substring(1));
-            AtomicBoolean isOk = new AtomicBoolean(false);
+            AtomicBoolean isOk = new AtomicBoolean(true);
             picks.forEach(x ->{
                 String[] info = x.split(" ");
                 int amount = Integer.parseInt(info[0]);
@@ -41,6 +47,6 @@ public class Main {
             });
             if(isOk.get()) sum[0] += gameNumber;
         });
-        System.out.println(sum[0]);
+        return sum[0];
     }
 }
